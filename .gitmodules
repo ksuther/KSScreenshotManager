@@ -1,0 +1,3 @@
+[submodule "Contributed/WaxSim"]
+	path = Contributed/WaxSim
+	url = https://github.com/blazingpair/WaxSim.git
