@@ -131,7 +131,7 @@ CGImageRef UIGetScreenImage(); //private API for getting an image of the entire 
             imageRect = CGRectMake(StatusBarHeight, 0, CGImageGetWidth(CGImage) - StatusBarHeight, CGImageGetHeight(CGImage));
         }
         
-        CGImage = CGImageCreateWithImageInRect(CGImage, imageRect);
+        CGImage = (__bridge CGImageRef)CFBridgingRelease(CGImageCreateWithImageInRect(CGImage, imageRect));
     }
     
     NSString *devicePrefix = nil;
