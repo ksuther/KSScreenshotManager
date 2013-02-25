@@ -120,7 +120,7 @@ CGImageRef UIGetScreenImage(); //private API for getting an image of the entire 
 {
     //Get image with status bar cropped out
     CGFloat StatusBarHeight = [[UIScreen mainScreen] scale] == 1 ? 20 : 40;
-    CGImageRef CGImage = UIGetScreenImage();
+    CGImageRef CGImage = CGImageRetain(UIGetScreenImage());
     BOOL isPortrait = UIInterfaceOrientationIsPortrait([[UIApplication sharedApplication] statusBarOrientation]);
     CGRect imageRect;
     
@@ -131,7 +131,9 @@ CGImageRef UIGetScreenImage(); //private API for getting an image of the entire 
             imageRect = CGRectMake(StatusBarHeight, 0, CGImageGetWidth(CGImage) - StatusBarHeight, CGImageGetHeight(CGImage));
         }
         
-        CGImage = CGImageCreateWithImageInRect(CGImage, imageRect);
+        CGImageRef croppedCGImage = CGImageCreateWithImageInRect(CGImage, imageRect);
+        CGImageRelease(CGImage);
+        CGImage = croppedCGImage;
     }
     
     NSString *devicePrefix = nil;
@@ -143,6 +145,7 @@ CGImageRef UIGetScreenImage(); //private API for getting an image of the entire 
     }
     
     UIImage *image = [UIImage imageWithCGImage:CGImage];
+    CGImageRelease(CGImage);
     NSData *data = UIImagePNGRepresentation(image);
     NSString *file = [NSString stringWithFormat:@"%@-%@-%@.png", devicePrefix, [[NSLocale currentLocale] localeIdentifier], name];
     NSURL *fileURL = [[self screenshotsURL] URLByAppendingPathComponent:file];
