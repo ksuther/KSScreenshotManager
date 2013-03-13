@@ -44,9 +44,14 @@ def quit_simulator():
 def set_device(device):
     subprocess.call(['defaults', 'write', 'com.apple.iphonesimulator', 'SimulateDevice', device])
 
-def waxsim(app_path, args):
+def waxsim(app_path, args, device):
     waxsim_path = os.path.join(os.path.split(os.path.realpath(__file__))[0], 'Contributed', 'WaxSim', 'build', 'Release', 'waxsim')
-    subprocess_args = [waxsim_path, app_path]
+    subprocess_args = [waxsim_path]
+    
+    if 'iPad' in device:
+        subprocess_args += ['-f', 'ipad']  
+    
+    subprocess_args += [app_path]    
     subprocess_args += args
     
     subprocess.call(subprocess_args)
@@ -73,6 +78,6 @@ if __name__ == '__main__':
         set_device(device)
         
         for language in languages:
-            waxsim(app_path, ['-AppleLanguages', '({})'.format(language), '-AppleLocale', language, destination_path])
+            waxsim(app_path, ['-AppleLanguages', '({})'.format(language), '-AppleLocale', language, destination_path], device)
     
     quit_simulator()
