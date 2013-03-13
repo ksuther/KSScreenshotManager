@@ -136,13 +136,12 @@ CGImageRef UIGetScreenImage(); //private API for getting an image of the entire 
     }
     
     NSString *devicePrefix = nil;
-    
     NSString *screenDensity = isRetina ? @"@2x" : @"";
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         devicePrefix = [NSString stringWithFormat:@"iphone%.0f%@", CGRectGetHeight([[UIScreen mainScreen] bounds]), screenDensity];
     } else {
-        devicePrefix = [NSString stringWithFormat:@"iPad%@",screenDensity];
+        devicePrefix = [NSString stringWithFormat:@"ipad%@",screenDensity];
     }
     
     UIImage *image = [UIImage imageWithCGImage:CGImage];
