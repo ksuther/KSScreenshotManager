@@ -119,7 +119,8 @@ CGImageRef UIGetScreenImage(); //private API for getting an image of the entire 
 - (void)saveScreenshot:(NSString *)name includeStatusBar:(BOOL)includeStatusBar
 {
     //Get image with status bar cropped out
-    CGFloat StatusBarHeight = [[UIScreen mainScreen] scale] == 1 ? 20 : 40;
+    BOOL isRetina = [[UIScreen mainScreen] scale] != 1.0f;
+    CGFloat StatusBarHeight = isRetina ? 40 : 20;
     CGImageRef CGImage = UIGetScreenImage();
     BOOL isPortrait = UIInterfaceOrientationIsPortrait([[UIApplication sharedApplication] statusBarOrientation]);
     CGRect imageRect;
@@ -136,10 +137,12 @@ CGImageRef UIGetScreenImage(); //private API for getting an image of the entire 
     
     NSString *devicePrefix = nil;
     
+    NSString *screenDensity = isRetina ? @"@2x" : @"";
+    
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        devicePrefix = [NSString stringWithFormat:@"iphone%.0f", CGRectGetHeight([[UIScreen mainScreen] bounds])];
+        devicePrefix = [NSString stringWithFormat:@"iphone%.0f%@", CGRectGetHeight([[UIScreen mainScreen] bounds]), screenDensity];
     } else {
-        devicePrefix = @"ipad";
+        devicePrefix = [NSString stringWithFormat:@"iPad%@",screenDensity];
     }
     
     UIImage *image = [UIImage imageWithCGImage:CGImage];
