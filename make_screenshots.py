@@ -78,6 +78,10 @@ if __name__ == '__main__':
         set_device(device)
         
         for language in languages:
-            waxsim(app_path, ['-AppleLanguages', '({})'.format(language), '-AppleLocale', language, destination_path], device)
-    
+            language_path = os.path.join(destination_path, language)
+            if not os.path.exists(language_path):
+                os.makedirs(language_path)
+
+            waxsim(app_path, ['-AppleLanguages', '({})'.format(language), '-AppleLocale', language, language_path], device)
+
     quit_simulator()
