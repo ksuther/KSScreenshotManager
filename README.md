@@ -9,16 +9,15 @@ See this blog post for more details: <http://ksuther.com/2013/02/24/automating-i
 1. Include KSScreenshotManager in your project. Adding it as a submodule is probably the easiest way to do this. Be sure to check out the WaxSim submodule as well by running `git submodule update --init`
 1. Add `KSScreenshotManager.h`, `KSScreenshotManager.m`, `KSScreenshotAction.h`, `KSScreenshotAction.m` to your project
 1. Subclass `KSScreenshotManager` and override `setupScreenshotActions`
-1. Customize `make_screenshots.py` and use it to generate your screenshots
-	- More specifically, you'll probably need to change these variables: `languages`, `devices`, `project_path`, `target_name`, and `app_name`
+1. Copy config.json.example and customize to suit your project
 
 ## Example project
 
-An example project is located in Example (surprise!). It has a very simple KSScreenshotManager subclass named MyScreenshotManager. `make_screenshots.py` is configured to run this example by default. You can run it with the following command:
+An example project is located in Example (surprise!). It has a very simple KSScreenshotManager subclass named MyScreenshotManager. You can run it with the following command:
 
-`python make_screenshots.py ~/Desktop/screenshot_output`
+`python make_screenshots.py config.json.example`
 
-This will compile the sample project, WaxSim, then use WaxSim to run the simulator build and dump the screenshots to the specified directory.
+This will compile the sample project, WaxSim, then use WaxSim to run the simulator build and dump the screenshots to /tmp/screenshots.
 
 Make sure that you've checked out WaxSim as a submodule by running `git submodule update --init` after cloning this repository, otherwise `make_screenshots.py` won't work.
 
