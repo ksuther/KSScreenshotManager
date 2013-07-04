@@ -7,24 +7,7 @@ import os
 import sys
 import subprocess
 import glob
-
-###
-# Customize these variables for your own project
-###
-
-#languages to create screenshots for
-languages = ['en', 'de']
-
-#devices to use - available device names are in the iOS Simulator under Hardware -> Device, such as iPad or iPad (Retina)
-devices = ['"iPhone (Retina 3.5-inch)"', '"iPhone (Retina 4-inch)"']
-
-project_path = os.path.join(os.path.realpath(os.path.split(__file__)[0]), 'Example') #Path to the Xcode project's enclosing directory
-target_name = 'KSScreenshotManagerExample' #Xcode target name
-app_name = 'KSScreenshotManagerExample.app' #Product name in build directory
-
-destination_path = os.path.abspath(sys.argv[1]) #Path to save the screenshots, don't change this if you pass the path in through the arguments
-
-###
+import json
 
 def compile_waxsim():
     previous_dir = os.getcwd()
@@ -34,8 +17,8 @@ def compile_waxsim():
 
 def compile_app():
     previous_dir = os.getcwd()
-    os.chdir(project_path)
-    subprocess.call(['xcodebuild', '-target', target_name, '-configuration', 'Screenshots', '-sdk', 'iphonesimulator', 'SYMROOT=build'], stdout=open('/dev/null', 'w'))
+    os.chdir(options['project_path'])
+    subprocess.call(['xcodebuild', '-target', options['target_name'], '-configuration', options['build_config'], '-sdk', 'iphonesimulator', 'SYMROOT=build'], stdout=open('/dev/null', 'w'))
     os.chdir(previous_dir)
 
 def quit_simulator():
@@ -58,31 +41,45 @@ def waxsim(app_path, args, device):
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        print 'Usage: make_screenshots.py screenshots-path'
+        print 'Usage: make_screenshots.py config-file-path'
         exit()
+
+    ###
+    # Read in configuration file
+    ###
+
+    try:
+        options = json.load(open(sys.argv[1]))
+    except IOError:
+        print 'Configuration file not found at ' + sys.argv[1]
+        exit()
+    except ValueError:
+        print "Syntax error in JSON file."
+        exit()
+
+    ###
     
-    app_path = os.path.join(project_path, 'build', 'Screenshots-iphonesimulator', app_name)
+    app_path = os.path.join(options['project_path'], 'build', options['build_config'] + '-iphonesimulator', options['app_name'])
     
-    print 'Building with Screenshots configuration...'
+    print 'Building with ' + options['build_config'] + ' configuration...'
     compile_app()
     
     print 'Building WaxSim...'
     compile_waxsim()
     
     #create destination directory
-    if not os.path.exists(destination_path):
-        os.makedirs(destination_path)
-
-    for device in devices:
+    if not os.path.exists(options['destination_path']):
+        os.makedirs(options['destination_path'])
+        
+    for device in options['devices']:
         quit_simulator()
         set_device(device)
         
-        for language in languages:
-            
-            language_path = os.path.join(destination_path, language)
+        for language in options['languages']:
+            language_path = os.path.join(options['destination_path'], language)
             if not os.path.exists(language_path):
                 os.makedirs(language_path)
-            
+
             waxsim(app_path, ['-AppleLanguages', '({})'.format(language), '-AppleLocale', language, language_path], device)
-    
+
     quit_simulator()
