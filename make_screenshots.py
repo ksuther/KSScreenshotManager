@@ -7,6 +7,7 @@ import os
 import sys
 import subprocess
 import glob
+import argparse
 import json
 
 def compile_waxsim():
@@ -40,22 +41,28 @@ def waxsim(app_path, args, device):
     subprocess.call(subprocess_args)
 
 if __name__ == '__main__':
-    if len(sys.argv) < 2:
-        print 'Usage: make_screenshots.py config-file-path'
-        exit()
+    parser = argparse.ArgumentParser(description='Build iOS screenshots.')
+    parser.add_argument('--path', '-p', dest='destination', help='destination path for screenshots (overrides config)')
+    parser.add_argument('config', help='path to JSON config file')
+
+    args = parser.parse_args()
+    config_path = args.config
 
     ###
     # Read in configuration file
     ###
 
     try:
-        options = json.load(open(sys.argv[1]))
+        options = json.load(open(config_path))
     except IOError:
-        print 'Configuration file not found at ' + sys.argv[1]
+        print 'Configuration file not found at ' + config_path
         exit()
     except ValueError:
         print "Syntax error in JSON file."
         exit()
+
+    if args.destination:
+        options['destination_path'] = args.destination
 
     ###
     
