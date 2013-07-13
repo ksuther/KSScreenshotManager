@@ -18,7 +18,7 @@ def compile_waxsim():
 
 def compile_app():
     previous_dir = os.getcwd()
-    os.chdir(options['project_path'])
+    os.chdir(project_path)
     subprocess.call(['xcodebuild', '-target', options['target_name'], '-configuration', options['build_config'], '-sdk', 'iphonesimulator', 'SYMROOT=build'], stdout=open('/dev/null', 'w'))
     os.chdir(previous_dir)
 
@@ -66,7 +66,13 @@ if __name__ == '__main__':
 
     ###
     
-    app_path = os.path.join(options['project_path'], 'build', options['build_config'] + '-iphonesimulator', options['app_name'])
+    if os.path.isabs(options['project_path']):
+        project_path = options['project_path']
+    else:
+        #project_path is relative to the parent directory of config_path
+        project_path = os.path.realpath(os.path.join(os.path.dirname(config_path), options['project_path']))
+    
+    app_path = os.path.join(project_path, 'build', options['build_config'] + '-iphonesimulator', options['app_name'])
     
     print 'Building with ' + options['build_config'] + ' configuration...'
     compile_app()
