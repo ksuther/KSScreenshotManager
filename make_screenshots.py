@@ -94,7 +94,9 @@ if __name__ == '__main__':
             language_path = os.path.join(options['destination_path'], language)
             if not os.path.exists(language_path):
                 os.makedirs(language_path)
-
+            
+            print 'Creating screenshots for {} using {}...'.format(language, device)
+            
             waxsim(app_path, ['-AppleLanguages', '({})'.format(language), '-AppleLocale', language, language_path], device)
 
     quit_simulator()
