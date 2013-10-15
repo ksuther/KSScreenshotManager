@@ -13,7 +13,7 @@ import json
 def compile_waxsim():
     previous_dir = os.getcwd()
     os.chdir(os.path.join(os.path.realpath(os.path.split(__file__)[0]), 'Contributed', 'WaxSim'))
-    subprocess.call(['xcodebuild', '-target', 'WaxSim', '-configuration', 'Release', 'SYMROOT=build'], stdout=open('/dev/null', 'w'))
+    subprocess.call(['xcodebuild', '-target', 'WaxSim', '-configuration', 'Release', 'clean', 'build', 'SYMROOT=build'], stdout=open('/dev/null', 'w'))
     os.chdir(previous_dir)
 
 def compile_app():
@@ -21,7 +21,7 @@ def compile_app():
     os.chdir(project_path)
     
     # Force the simulator build to use 32-bit, otherwise UIGetScreenImage doesn't exist
-    subprocess.call(['xcodebuild', '-target', options['target_name'], '-configuration', options['build_config'], '-sdk', 'iphonesimulator', 'SYMROOT=build', 'ARCHS=i386', 'ONLY_ACTIVE_ARCH=NO'], stdout=open('/dev/null', 'w'))
+    subprocess.call(['xcodebuild', '-target', options['target_name'], '-configuration', options['build_config'], '-sdk', 'iphonesimulator', 'clean', 'build', 'SYMROOT=build', 'ARCHS=i386', 'ONLY_ACTIVE_ARCH=NO'], stdout=open('/dev/null', 'w'))
     os.chdir(previous_dir)
 
 def quit_simulator():
