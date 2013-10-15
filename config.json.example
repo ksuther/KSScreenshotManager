@@ -1,15 +1,15 @@
 {
-    "app_name": "KSScreenshotManagerExample.app", 
-    "build_config": "Screenshots", 
-    "destination_path": "/tmp/screenshots", 
+    "app_name": "KSScreenshotManagerExample.app",
+    "build_config": "Screenshots",
+    "destination_path": "/tmp/screenshots",
     "devices": [
-        "\"iPhone (Retina 3.5-inch)\"", 
-        "\"iPhone (Retina 4-inch)\""
-    ], 
+        "\"iPhone Retina (3.5-inch)\"",
+        "\"iPhone Retina (4-inch)\""
+    ],
     "languages": [
-        "en", 
+        "en",
         "de"
-    ], 
-    "project_path": "Example", 
+    ],
+    "project_path": "Example",
     "target_name": "KSScreenshotManagerExample"
 }
