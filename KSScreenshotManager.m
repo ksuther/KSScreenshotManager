@@ -122,7 +122,8 @@ CGImageRef UIGetScreenImage(); //private API for getting an image of the entire 
     BOOL isRetina = [[UIScreen mainScreen] scale] != 1.0f;
     CGFloat StatusBarHeight = isRetina ? 40 : 20;
     CGImageRef CGImage = UIGetScreenImage();
-    BOOL isPortrait = UIInterfaceOrientationIsPortrait([[UIApplication sharedApplication] statusBarOrientation]);
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    BOOL isPortrait = UIInterfaceOrientationIsPortrait(orientation);
     CGRect imageRect;
     
     if (!includeStatusBar) {
@@ -135,6 +136,41 @@ CGImageRef UIGetScreenImage(); //private API for getting an image of the entire 
         CGImage = (__bridge CGImageRef)CFBridgingRelease(CGImageCreateWithImageInRect(CGImage, imageRect));
     }
     
+    UIImage *image = [UIImage imageWithCGImage:CGImage];
+    
+    //Rotate image to match orientation
+    if (!isPortrait) {
+        CGSize size;
+        
+        if (UIInterfaceOrientationIsLandscape(orientation)) {
+            size.width = [image size].height;
+            size.height = [image size].width;
+        } else {
+            size = [image size];
+        }
+        
+        UIGraphicsBeginImageContextWithOptions(size, YES, 1);
+        
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        
+        if (orientation == UIInterfaceOrientationPortraitUpsideDown) {
+            CGContextRotateCTM(context, M_PI);
+            CGContextTranslateCTM(context, -size.width, -size.height);
+        } else if (orientation == UIInterfaceOrientationLandscapeLeft) {
+            CGContextRotateCTM(context, M_PI_2);
+            CGContextTranslateCTM(context, 0, -size.width);
+        } else if (orientation == UIInterfaceOrientationLandscapeRight) {
+            CGContextRotateCTM(context, -M_PI_2);
+            CGContextTranslateCTM(context, -size.height, 0);
+        }
+        
+        [image drawAtPoint:CGPointZero];
+        
+        image = UIGraphicsGetImageFromCurrentImageContext();
+        
+        UIGraphicsEndImageContext();
+    }
+    
     NSString *devicePrefix = nil;
     NSString *screenDensity = isRetina ? @"@2x" : @"";
     
@@ -144,7 +180,6 @@ CGImageRef UIGetScreenImage(); //private API for getting an image of the entire 
         devicePrefix = [NSString stringWithFormat:@"ipad%@",screenDensity];
     }
     
-    UIImage *image = [UIImage imageWithCGImage:CGImage];
     NSData *data = UIImagePNGRepresentation(image);
     NSString *file = [NSString stringWithFormat:@"%@-%@-%@.png", devicePrefix, [[NSLocale currentLocale] localeIdentifier], name];
     NSURL *fileURL = [[self screenshotsURL] URLByAppendingPathComponent:file];
