@@ -38,6 +38,12 @@
 @property(nonatomic, retain) NSURL *screenshotsURL;
 
 /**
+ * Whether or not the simulator closes after all screenshot actions finish
+ * Defaults to YES
+ */
+@property(nonatomic, assign, getter = doesExitOnComplete) BOOL exitOnComplete;
+
+/**
  * Begin taking screenshots. Exits when complete.
  */
 - (void)takeScreenshots;

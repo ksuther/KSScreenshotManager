@@ -49,6 +49,8 @@ CGImageRef UIGetScreenImage(); //private API for getting an image of the entire 
             
             [self setScreenshotsURL:[NSURL fileURLWithPath:documentsPath]];
         }
+
+        _exitOnComplete = YES;
     }
     return self;
 }
@@ -78,7 +80,7 @@ CGImageRef UIGetScreenImage(); //private API for getting an image of the entire 
             //asynchronous actions need to call actionIsReady manually
             [self actionIsReady];
         }
-    } else {
+    } else if ([self doesExitOnComplete]) {
         exit(0);
     }
 }
