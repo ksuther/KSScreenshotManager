@@ -182,6 +182,7 @@ CGImageRef UIGetScreenImage(); //private API for getting an image of the entire 
     
     NSData *data = UIImagePNGRepresentation(image);
     NSString *file = [NSString stringWithFormat:@"%@-%@-%@.png", devicePrefix, [[NSLocale currentLocale] localeIdentifier], name];
+    [[NSFileManager defaultManager] createDirectoryAtURL:[self screenshotsURL] withIntermediateDirectories:YES attributes:nil error:nil];
     NSURL *fileURL = [[self screenshotsURL] URLByAppendingPathComponent:file];
     NSError *error;
     
