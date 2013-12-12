@@ -183,10 +183,18 @@ CGImageRef UIGetScreenImage(); //private API for getting an image of the entire 
     NSData *data = UIImagePNGRepresentation(image);
     NSString *file = [NSString stringWithFormat:@"%@-%@-%@.png", devicePrefix, [[NSLocale currentLocale] localeIdentifier], name];
     NSURL *fileURL = [[self screenshotsURL] URLByAppendingPathComponent:file];
+    NSError *error;
+    
+    // Create the screenshot directory if it doesn't exist already
+    if (![[NSFileManager defaultManager] createDirectoryAtURL:[self screenshotsURL] withIntermediateDirectories:YES attributes:nil error:&error]) {
+        NSLog(@"Failed to create screenshots directory: %@", error);
+    }
     
     NSLog(@"Saving screenshot: %@", [fileURL path]);
     
-    [data writeToURL:fileURL atomically:YES];
+    if (![data writeToURL:fileURL options:NSDataWritingAtomic error:&error]) {
+        NSLog(@"Failed to write screenshot at %@: %@", fileURL, error);
+    }
 }
 
 @end
