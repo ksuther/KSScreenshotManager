@@ -11,6 +11,15 @@ See this blog post for more details: <http://ksuther.com/2013/02/24/automating-i
 1. Subclass `KSScreenshotManager` and override `setupScreenshotActions`
 1. Copy config.json.example and customize to suit your project
 
+You can also use [CocoaPods](http://cocoapods.org). You should [create a duplicate target](http://www.codeworth.com/blog/mobile/ios-target-duplication/) in XCode, so KSScreenshotManager won't be included in your release build. Then, add this to your Podfile:
+
+```ruby
+# Replace 'Screenhots Target' with your separate target name
+target 'Screenshots Target', :exclusive => true do
+  pod 'KSScreenshotManager'
+end
+```
+
 ## Example project
 
 An example project is located in Example (surprise!). It has a very simple KSScreenshotManager subclass named MyScreenshotManager. You can run it with the following command:
