@@ -6,7 +6,7 @@ See this blog post for more details: <http://ksuther.com/2013/02/24/automating-i
 
 ## Adding this to your project
 
-1. Include KSScreenshotManager in your project. Adding it as a submodule is probably the easiest way to do this. Be sure to check out the WaxSim submodule as well by running `git submodule update --init`
+1. Include KSScreenshotManager in your project. Adding it as a submodule is probably the easiest way to do this. Be sure to check out the ios-sim submodule as well by running `git submodule update --init`
 1. Add `KSScreenshotManager.h`, `KSScreenshotManager.m`, `KSScreenshotAction.h`, `KSScreenshotAction.m` to your project
 1. Subclass `KSScreenshotManager` and override `setupScreenshotActions`
 1. Copy config.json.example and customize to suit your project
@@ -26,9 +26,9 @@ An example project is located in Example (surprise!). It has a very simple KSScr
 
 `python make_screenshots.py config.json.example`
 
-This will compile the sample project, WaxSim, then use WaxSim to run the simulator build and dump the screenshots to /tmp/screenshots.
+This will compile the sample project, ios-sim, then use ios-sim to run the simulator build and dump the screenshots to /tmp/screenshots.
 
-Make sure that you've checked out WaxSim as a submodule by running `git submodule update --init` after cloning this repository, otherwise `make_screenshots.py` won't work.
+Make sure that you've checked out ios-sim as a submodule by running `git submodule update --init` after cloning this repository, otherwise `make_screenshots.py` won't work.
 
 ## License
 
