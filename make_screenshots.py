@@ -8,6 +8,7 @@ import subprocess
 import glob
 import argparse
 import json
+import shutil
 
 def compile_iossim():
     previous_dir = os.getcwd()
@@ -25,6 +26,9 @@ def compile_app():
 
 def quit_simulator():
     subprocess.call(['killall', 'iPhone Simulator'])
+    
+def reset_simulator():
+    shutil.rmtree(os.path.expanduser('~/Library/Application Support/iPhone Simulator'), ignore_errors=True)
 
 def iossim(app_path, args, device):
     iossim_path = os.path.join(os.path.split(os.path.realpath(__file__))[0], 'Contributed', 'ios-sim', 'build', 'Release', 'ios-sim')
@@ -35,10 +39,12 @@ def iossim(app_path, args, device):
     # ios-sim does the default setting itself, so convert the device name into arguments that ios-sim expects
     if 'iPad' in device:
         subprocess_args += ['--family', 'ipad']
-    elif 'iPhone Retina (3.5-inch)' in device:
-        subprocess_args += ['--family', 'iphone', '--retina']
-    elif 'iPhone Retina (4-inch)' in device:
-        subprocess_args += ['--family', 'iphone', '--retina', '--tall']
+    else:
+        subprocess_args += ['--family', 'iphone']
+    if 'Retina' in device:
+        subprocess_args += ['--retina']
+    if '(4-inch)' in device:
+        subprocess_args += ['--tall']
 
     subprocess_args += ['--args']
     subprocess_args += args
@@ -98,6 +104,10 @@ if __name__ == '__main__':
                 os.makedirs(language_path)
             
             print 'Creating screenshots for {} using {}...'.format(language, device)
+            
+            if options['reset_between_runs']:
+                quit_simulator()
+                reset_simulator()
             
             iossim(app_path, ['-AppleLanguages', '({})'.format(language), '-AppleLocale', language, language_path], device)
 
