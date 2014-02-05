@@ -44,6 +44,12 @@
 @property(nonatomic, assign, getter = doesExitOnComplete) BOOL exitOnComplete;
 
 /**
+ * Whether or not the simulator closes after all screenshot actions finish
+ * Defaults to YES
+ */
+@property(nonatomic, assign, getter = isLoggingEnabled) BOOL loggingEnabled;
+
+/**
  * Begin taking screenshots. Exits when complete.
  */
 - (void)takeScreenshots;
