@@ -35,6 +35,8 @@ def iossim(app_path, args, device):
     # ios-sim does the default setting itself, so convert the device name into arguments that ios-sim expects
     if 'iPad' in device:
         subprocess_args += ['--family', 'ipad']
+    if 'iPad Retina' in device:
+        subprocess_args += ['--family', 'ipad', '--retina']
     elif 'iPhone Retina (3.5-inch)' in device:
         subprocess_args += ['--family', 'iphone', '--retina']
     elif 'iPhone Retina (4-inch)' in device:
