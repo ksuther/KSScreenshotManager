@@ -44,7 +44,7 @@
 @property(nonatomic, assign, getter = doesExitOnComplete) BOOL exitOnComplete;
 
 /**
- * Whether or not the simulator closes after all screenshot actions finish
+ * Whether or not screenshot manager logs progress and errors
  * Defaults to YES
  */
 @property(nonatomic, assign, getter = isLoggingEnabled) BOOL loggingEnabled;
