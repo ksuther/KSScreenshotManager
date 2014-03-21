@@ -191,17 +191,17 @@ CGImageRef UIGetScreenImage(); //private API for getting an image of the entire 
     // Create the screenshot directory if it doesn't exist already
     if (![[NSFileManager defaultManager] createDirectoryAtURL:[self screenshotsURL] withIntermediateDirectories:YES attributes:nil error:&error]) {
         if (_loggingEnabled) {
-          NSLog(@"Failed to create screenshots directory: %@", error);
+            NSLog(@"Failed to create screenshots directory: %@", error);
         }
     }
-  
+    
     if (_loggingEnabled) {
         NSLog(@"Saving screenshot: %@", [fileURL path]);
     }
     
     if (![data writeToURL:fileURL options:NSDataWritingAtomic error:&error]) {
         if (_loggingEnabled) {
-          NSLog(@"Failed to write screenshot at %@: %@", fileURL, error);
+            NSLog(@"Failed to write screenshot at %@: %@", fileURL, error);
         }
     }
 }
