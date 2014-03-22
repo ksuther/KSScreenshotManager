@@ -107,7 +107,7 @@ if __name__ == '__main__':
             
             print 'Creating screenshots for {} using {}...'.format(language, device)
             
-            if options['reset_between_runs']:
+            if 'reset_between_runs' in options and options['reset_between_runs']:
                 quit_simulator()
                 reset_simulator()
             
