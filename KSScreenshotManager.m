@@ -128,7 +128,24 @@ CGImageRef UIGetScreenImage(); //private API for getting an image of the entire 
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
     BOOL isPortrait = UIInterfaceOrientationIsPortrait(orientation);
     CGRect imageRect;
-    
+
+    // remove alpha since the new itunes connect doesn't like it
+    // http://stackoverflow.com/questions/21416358/remove-alpha-channel-from-uiimage
+    // http://stackoverflow.com/questions/9920836/color-distortion-in-cgimagecreate
+    CFDataRef theData = CGDataProviderCopyData(CGImageGetDataProvider(CGImage));
+    UInt8 *pixelData = (UInt8 *) CFDataGetBytePtr(theData);
+    CGContextRef bitmapContext = CGBitmapContextCreate(pixelData,
+                                                       CGImageGetWidth(CGImage),
+                                                       CGImageGetHeight(CGImage),
+                                                       CGImageGetBitsPerComponent(CGImage),
+                                                       CGImageGetBytesPerRow(CGImage),
+                                                       CGImageGetColorSpace(CGImage),
+                                                       kCGBitmapByteOrder32Little | kCGImageAlphaNoneSkipFirst
+                                                       );
+    CGImage = CGBitmapContextCreateImage(bitmapContext);
+    CGContextRelease(bitmapContext);
+    CFRelease(theData);
+
     if (!includeStatusBar) {
         if (isPortrait) {
             imageRect = CGRectMake(0, StatusBarHeight, CGImageGetWidth(CGImage), CGImageGetHeight(CGImage) - StatusBarHeight);
