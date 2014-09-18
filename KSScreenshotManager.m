@@ -133,7 +133,7 @@ CGImageRef UIGetScreenImage(); //private API for getting an image of the entire 
     // http://stackoverflow.com/questions/21416358/remove-alpha-channel-from-uiimage
     // http://stackoverflow.com/questions/9920836/color-distortion-in-cgimagecreate
     CFDataRef theData = CGDataProviderCopyData(CGImageGetDataProvider(CGImage));
-    UInt8 *pixelData = (UInt8 *) CFDataGetBytePtr(theData);
+    UInt8 *pixelData = (UInt8 *)CFDataGetBytePtr(theData);
     CGContextRef bitmapContext = CGBitmapContextCreate(pixelData,
                                                        CGImageGetWidth(CGImage),
                                                        CGImageGetHeight(CGImage),
