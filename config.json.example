@@ -3,8 +3,10 @@
     "build_config": "Screenshots",
     "destination_path": "/tmp/screenshots",
     "devices": [
-        "\"iPhone Retina (3.5-inch)\"",
-        "\"iPhone Retina (4-inch)\""
+        "com.apple.CoreSimulator.SimDeviceType.iPhone-4s",
+        "com.apple.CoreSimulator.SimDeviceType.iPhone-5",
+        "com.apple.CoreSimulator.SimDeviceType.iPhone-6",
+        "com.apple.CoreSimulator.SimDeviceType.iPhone-6-Plus"
     ],
     "languages": [
         "en",

@@ -34,19 +34,7 @@ def iossim(app_path, args, device):
     iossim_path = os.path.join(os.path.split(os.path.realpath(__file__))[0], 'Contributed', 'ios-sim', 'build', 'Release', 'ios-sim')
     subprocess_args = [iossim_path]
 
-    subprocess_args += ['launch', app_path]
-
-    # ios-sim does the default setting itself, so convert the device name into arguments that ios-sim expects
-    if 'iPad' in device:
-        subprocess_args += ['--family', 'ipad']
-    else:
-        subprocess_args += ['--family', 'iphone']
-
-    if 'Retina' in device:
-        subprocess_args += ['--retina']
-
-    if '(4-inch)' in device:
-        subprocess_args += ['--tall']
+    subprocess_args += ['launch', app_path, '--devicetypeid', device]
 
     subprocess_args += ['--args']
     subprocess_args += args
