@@ -7,14 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		370A485819CB3C09004AE4F3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 370A485719CB3C09004AE4F3 /* Images.xcassets */; };
 		3749A63816C8A493007C1216 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3749A63716C8A493007C1216 /* UIKit.framework */; };
 		3749A63A16C8A493007C1216 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3749A63916C8A493007C1216 /* Foundation.framework */; };
 		3749A63C16C8A493007C1216 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3749A63B16C8A493007C1216 /* CoreGraphics.framework */; };
 		3749A64416C8A493007C1216 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3749A64316C8A493007C1216 /* main.m */; };
 		3749A64816C8A493007C1216 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3749A64716C8A493007C1216 /* AppDelegate.m */; };
-		3749A64A16C8A493007C1216 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 3749A64916C8A493007C1216 /* Default.png */; };
-		3749A64C16C8A493007C1216 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3749A64B16C8A493007C1216 /* Default@2x.png */; };
-		3749A64E16C8A493007C1216 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3749A64D16C8A493007C1216 /* Default-568h@2x.png */; };
 		3749A65916C8A52B007C1216 /* KSScreenshotAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 3749A65616C8A52B007C1216 /* KSScreenshotAction.m */; };
 		3749A65A16C8A52B007C1216 /* KSScreenshotManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3749A65816C8A52B007C1216 /* KSScreenshotManager.m */; };
 		3749A65D16C8A564007C1216 /* MyScreenshotManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3749A65C16C8A564007C1216 /* MyScreenshotManager.m */; };
@@ -23,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		370A485719CB3C09004AE4F3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = SOURCE_ROOT; };
 		3749A63416C8A493007C1216 /* KSScreenshotManagerExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KSScreenshotManagerExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3749A63716C8A493007C1216 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3749A63916C8A493007C1216 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -32,9 +31,6 @@
 		3749A64516C8A493007C1216 /* KSScreenshotManagerExample-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KSScreenshotManagerExample-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		3749A64616C8A493007C1216 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = SOURCE_ROOT; };
 		3749A64716C8A493007C1216 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = SOURCE_ROOT; };
-		3749A64916C8A493007C1216 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
-		3749A64B16C8A493007C1216 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = SOURCE_ROOT; };
-		3749A64D16C8A493007C1216 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = SOURCE_ROOT; };
 		3749A65516C8A52B007C1216 /* KSScreenshotAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSScreenshotAction.h; path = ../KSScreenshotAction.h; sourceTree = SOURCE_ROOT; };
 		3749A65616C8A52B007C1216 /* KSScreenshotAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSScreenshotAction.m; path = ../KSScreenshotAction.m; sourceTree = SOURCE_ROOT; };
 		3749A65716C8A52B007C1216 /* KSScreenshotManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSScreenshotManager.h; path = ../KSScreenshotManager.h; sourceTree = SOURCE_ROOT; };
@@ -106,13 +102,11 @@
 		3749A63E16C8A493007C1216 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				370A485719CB3C09004AE4F3 /* Images.xcassets */,
 				3749A68816C8B063007C1216 /* Localizable.strings */,
 				3749A63F16C8A493007C1216 /* KSScreenshotManagerExample-Info.plist */,
 				3749A64316C8A493007C1216 /* main.m */,
 				3749A64516C8A493007C1216 /* KSScreenshotManagerExample-Prefix.pch */,
-				3749A64916C8A493007C1216 /* Default.png */,
-				3749A64B16C8A493007C1216 /* Default@2x.png */,
-				3749A64D16C8A493007C1216 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -181,10 +175,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3749A64A16C8A493007C1216 /* Default.png in Resources */,
-				3749A64C16C8A493007C1216 /* Default@2x.png in Resources */,
-				3749A64E16C8A493007C1216 /* Default-568h@2x.png in Resources */,
 				3749A68A16C8B063007C1216 /* Localizable.strings in Resources */,
+				370A485819CB3C09004AE4F3 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,7 +236,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -268,7 +260,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -278,6 +270,7 @@
 		3749A65216C8A493007C1216 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KSScreenshotManagerExample-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -293,6 +286,7 @@
 		3749A65316C8A493007C1216 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KSScreenshotManagerExample-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -330,7 +324,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -339,6 +333,7 @@
 		3749A68D16C8B36D007C1216 /* Screenshots */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KSScreenshotManagerExample-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
