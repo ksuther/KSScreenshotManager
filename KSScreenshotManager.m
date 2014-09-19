@@ -123,7 +123,7 @@ CGImageRef UIGetScreenImage(); //private API for getting an image of the entire 
 {
     //Get image with status bar cropped out
     BOOL isRetina = [[UIScreen mainScreen] scale] != 1.0f;
-    CGFloat StatusBarHeight = isRetina ? 40 : 20;
+    CGFloat StatusBarHeight = [[UIScreen mainScreen] scale] * 20;
     CGImageRef CGImage = UIGetScreenImage();
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
     BOOL isPortrait = UIInterfaceOrientationIsPortrait(orientation);
