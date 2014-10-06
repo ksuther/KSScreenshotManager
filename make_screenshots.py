@@ -29,7 +29,7 @@ def compile_app():
     os.chdir(previous_dir)
 
 def quit_simulator():
-    subprocess.call(['killall', 'iPhone Simulator'])
+    subprocess.call(['killall', 'iOS Simulator'])
     
 def reset_simulator():
     shutil.rmtree(os.path.expanduser('~/Library/Application Support/iPhone Simulator'), ignore_errors=True)
