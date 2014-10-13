@@ -38,10 +38,14 @@ static KSScreenshotManager *Instance = nil;
 
 + (void)load
 {
-    DP_ONCE(^{
-        NC_ADDB(UIApplicationDidFinishLaunchingNotification, ^(NSNotification *note) {
-            Instance = [[self alloc] init];
-        });
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidFinishLaunchingNotification
+                                                          object:[UIApplication sharedApplication]
+                                                           queue:[NSOperationQueue mainQueue]
+                                                      usingBlock:^(NSNotification *note) {
+                                                          Instance = [[self alloc] init];
+                                                      }];
     });
 }
 
