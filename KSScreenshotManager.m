@@ -34,6 +34,21 @@ CGImageRef UIGetScreenImage(); //private API for getting an image of the entire 
 
 @implementation KSScreenshotManager
 
+static KSScreenshotManager *Instance = nil;
+
++ (void)load
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidFinishLaunchingNotification
+                                                          object:[UIApplication sharedApplication]
+                                                           queue:[NSOperationQueue mainQueue]
+                                                      usingBlock:^(NSNotification *note) {
+                                                          Instance = [[self alloc] init];
+                                                      }];
+    });
+}
+
 - (id)init
 {
     if ( (self = [super init]) ) {
