@@ -26,8 +26,6 @@
 #import "KSScreenshotManager.h"
 #import "KSScreenshotAction.h"
 
-CGImageRef UIGetScreenImage(); //private API for getting an image of the entire screen
-
 @interface KSScreenshotManager ()
 @property(nonatomic, strong) NSMutableArray *screenshotActions;
 @end
@@ -124,7 +122,14 @@ CGImageRef UIGetScreenImage(); //private API for getting an image of the entire 
     //Get image with status bar cropped out
     BOOL isRetina = [[UIScreen mainScreen] scale] != 1.0f;
     CGFloat StatusBarHeight = [[UIScreen mainScreen] scale] * 20;
-    CGImageRef CGImage = UIGetScreenImage();
+    
+    UIGraphicsBeginImageContextWithOptions([[UIScreen mainScreen] bounds].size, YES, 0);
+    [[[UIScreen mainScreen] snapshotViewAfterScreenUpdates:YES] drawViewHierarchyInRect:[[UIScreen mainScreen] bounds] afterScreenUpdates:YES];
+    
+    CGImageRef CGImage = [UIGraphicsGetImageFromCurrentImageContext() CGImage];
+    
+    UIGraphicsEndImageContext();
+    
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
     BOOL isPortrait = UIInterfaceOrientationIsPortrait(orientation);
     CGRect imageRect;
