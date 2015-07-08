@@ -1,11 +1,11 @@
 Pod::Spec.new do |s|
     s.name         = 'KSScreenshotManager'
-    s.version      = '0.0.3'
+    s.version      = '0.0.4'
     s.license      = 'MIT'
     s.summary      = "Teach your computer to take screenshots of your app so you don't have to anymore. Tools to automate making iOS screenshots."
     s.author       = "Kent Sutherland"
     s.homepage     = "https://github.com/ksuther/KSScreenshotManager"
-    s.source       = { :git => 'https://github.com/ksuther/KSScreenshotManager.git', :tag => '0.0.3' }
+    s.source       = { :git => 'https://github.com/ksuther/KSScreenshotManager.git', :tag => '0.0.4' }
     s.source_files = '*.{h,m}'
     s.platform     = :ios, '8.0'
 
