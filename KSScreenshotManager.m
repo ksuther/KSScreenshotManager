@@ -215,7 +215,7 @@
     }
     
     NSData *data = UIImagePNGRepresentation(image);
-    NSString *file = [NSString stringWithFormat:@"%@-%@-%@.png", devicePrefix, [[NSLocale currentLocale] localeIdentifier], name];
+    NSString *file = [NSString stringWithFormat:@"%@-%@-%@.png", devicePrefix, [[NSLocale currentLocale] objectForKey:NSLocaleLanguageCode], name];
     NSURL *fileURL = [[self screenshotsURL] URLByAppendingPathComponent:file];
     NSError *error;
     
