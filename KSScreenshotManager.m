@@ -130,10 +130,6 @@
     
     UIGraphicsEndImageContext();
     
-    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-    BOOL isPortrait = UIInterfaceOrientationIsPortrait(orientation);
-    CGRect imageRect;
-
     // remove alpha since the new itunes connect doesn't like it
     // http://stackoverflow.com/questions/21416358/remove-alpha-channel-from-uiimage
     // http://stackoverflow.com/questions/9920836/color-distortion-in-cgimagecreate
@@ -152,51 +148,13 @@
     CFRelease(theData);
 
     if (!includeStatusBar) {
-        if (isPortrait) {
-            imageRect = CGRectMake(0, StatusBarHeight, CGImageGetWidth(CGImage), CGImageGetHeight(CGImage) - StatusBarHeight);
-        } else {
-            imageRect = CGRectMake(StatusBarHeight, 0, CGImageGetWidth(CGImage) - StatusBarHeight, CGImageGetHeight(CGImage));
-        }
+        CGRect imageRect = CGRectMake(0, StatusBarHeight, CGImageGetWidth(CGImage), CGImageGetHeight(CGImage) - StatusBarHeight);
         
         CGImage = (__bridge CGImageRef)CFBridgingRelease(CGImageCreateWithImageInRect(CGImage, imageRect));
     }
     
     UIImage *image = [UIImage imageWithCGImage:CGImage];
-    
-    //Rotate image to match orientation
-    if (!isPortrait) {
-        CGSize size;
-        
-        if (UIInterfaceOrientationIsLandscape(orientation)) {
-            size.width = [image size].height;
-            size.height = [image size].width;
-        } else {
-            size = [image size];
-        }
-        
-        UIGraphicsBeginImageContextWithOptions(size, YES, 1);
-        
-        CGContextRef context = UIGraphicsGetCurrentContext();
-        
-        if (orientation == UIInterfaceOrientationPortraitUpsideDown) {
-            CGContextRotateCTM(context, M_PI);
-            CGContextTranslateCTM(context, -size.width, -size.height);
-        } else if (orientation == UIInterfaceOrientationLandscapeLeft) {
-            CGContextRotateCTM(context, M_PI_2);
-            CGContextTranslateCTM(context, 0, -size.width);
-        } else if (orientation == UIInterfaceOrientationLandscapeRight) {
-            CGContextRotateCTM(context, -M_PI_2);
-            CGContextTranslateCTM(context, -size.height, 0);
-        }
-        
-        [image drawAtPoint:CGPointZero];
-        
-        image = UIGraphicsGetImageFromCurrentImageContext();
-        
-        UIGraphicsEndImageContext();
-    }
-    
-    NSString *devicePrefix = nil;
+    NSString *devicePrefix;
     NSString *screenDensity = isRetina ? [NSString stringWithFormat:@"@%.0fx", [[UIScreen mainScreen] scale]] : @"";
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
