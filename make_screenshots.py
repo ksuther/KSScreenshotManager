@@ -20,7 +20,6 @@ def compile_app():
     previous_dir = os.getcwd()
     os.chdir(project_path)
     
-    # Force the simulator build to use 32-bit, otherwise UIGetScreenImage doesn't exist
     if 'scheme_name' in options:
         subprocess.call(['xcodebuild', '-scheme', options['scheme_name'], '-configuration', options['build_config'], '-sdk', 'iphonesimulator', '-derivedDataPath', 'build', 'clean', 'build'], stdout=open('/dev/null', 'w'))
     else:
