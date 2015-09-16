@@ -13,17 +13,19 @@ import shutil
 def compile_iossim():
     previous_dir = os.getcwd()
     os.chdir(os.path.join(os.path.realpath(os.path.split(__file__)[0]), 'Contributed', 'ios-sim'))
-    subprocess.call(['xcodebuild', '-scheme', 'ios-sim', '-configuration', 'Release', '-derivedDataPath', 'build', 'clean', 'build', 'SYMROOT=build'], stdout=open('/dev/null', 'w'))
+    subprocess.call(['xcrun', 'xcodebuild', '-scheme', 'ios-sim', '-configuration', 'Release', '-derivedDataPath', 'build', 'clean', 'build', 'SYMROOT=build'], stdout=open('/dev/null', 'w'))
     os.chdir(previous_dir)
 
 def compile_app():
     previous_dir = os.getcwd()
     os.chdir(project_path)
     
+    # This is specifying -destination 'name=iPhone 6' instead of -sdk iphonesimulator to ensure that this works with apps that have Watch apps
+    # This assumes that there's a simulator named iPhone 6 on the machine
     if 'scheme_name' in options:
-        subprocess.call(['xcodebuild', '-scheme', options['scheme_name'], '-configuration', options['build_config'], '-sdk', 'iphonesimulator', '-derivedDataPath', 'build', 'clean', 'build'], stdout=open('/dev/null', 'w'))
+        subprocess.call(['xcrun', 'xcodebuild', '-scheme', options['scheme_name'], '-configuration', options['build_config'], '-destination', 'name=iPhone 6', '-derivedDataPath', 'build', 'clean', 'build'], stdout=open('/dev/null', 'w'))
     else:
-        subprocess.call(['xcodebuild', '-target', options['target_name'], '-configuration', options['build_config'], '-sdk', 'iphonesimulator', 'clean', 'build', 'SYMROOT=build'], stdout=open('/dev/null', 'w'))
+        subprocess.call(['xcrun', 'xcodebuild', '-target', options['target_name'], '-configuration', options['build_config'], '-destination', 'name=iPhone 6', 'clean', 'build', 'SYMROOT=build'], stdout=open('/dev/null', 'w'))
 
     os.chdir(previous_dir)
 
