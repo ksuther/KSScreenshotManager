@@ -20,12 +20,13 @@ def compile_app():
     previous_dir = os.getcwd()
     os.chdir(project_path)
     
-    # This is specifying -destination 'name=iPhone 6' instead of -sdk iphonesimulator to ensure that this works with apps that have Watch apps
-    # This assumes that there's a simulator named iPhone 6 on the machine
+    # This is specifying -destination 'name=iPhone 4s' instead of -sdk iphonesimulator to ensure that this works with apps that have Watch apps
+    # This assumes that there's a simulator named iPhone 4s the machine
+    # Specify a 4s so that the 32-bit version gets built (which will run on all devices)
     if 'scheme_name' in options:
-        subprocess.call(['xcrun', 'xcodebuild', '-scheme', options['scheme_name'], '-configuration', options['build_config'], '-destination', 'name=iPhone 6', '-derivedDataPath', 'build', 'clean', 'build'], stdout=open('/dev/null', 'w'))
+        subprocess.call(['xcrun', 'xcodebuild', '-scheme', options['scheme_name'], '-configuration', options['build_config'], '-destination', 'name=iPhone 4s', '-derivedDataPath', 'build', 'clean', 'build'], stdout=open('/dev/null', 'w'))
     else:
-        subprocess.call(['xcrun', 'xcodebuild', '-target', options['target_name'], '-configuration', options['build_config'], '-destination', 'name=iPhone 6', 'clean', 'build', 'SYMROOT=build'], stdout=open('/dev/null', 'w'))
+        subprocess.call(['xcrun', 'xcodebuild', '-target', options['target_name'], '-configuration', options['build_config'], '-destination', 'name=iPhone 4s', 'clean', 'build', 'SYMROOT=build'], stdout=open('/dev/null', 'w'))
 
     os.chdir(previous_dir)
 
