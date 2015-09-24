@@ -20,13 +20,13 @@ def compile_app():
     previous_dir = os.getcwd()
     os.chdir(project_path)
     
-    # This is specifying -destination 'name=iPhone 4s' instead of -sdk iphonesimulator to ensure that this works with apps that have Watch apps
-    # This assumes that there's a simulator named iPhone 4s the machine
-    # Specify a 4s so that the 32-bit version gets built (which will run on all devices)
+    # This is specifying -destination instead of -sdk iphonesimulator to ensure that this works with apps that have Watch apps
+    # By default this script uses an iPhone 4s as the destination so that the 32-bit version gets built (which will run on all devices)
+    # The destination can be configured in the options json
     if 'scheme_name' in options:
-        subprocess.call(['xcrun', 'xcodebuild', '-scheme', options['scheme_name'], '-configuration', options['build_config'], '-destination', 'name=iPhone 4s', '-derivedDataPath', 'build', 'clean', 'build'], stdout=open('/dev/null', 'w'))
+        subprocess.call(['xcrun', 'xcodebuild', '-scheme', options['scheme_name'], '-configuration', options['build_config'], '-destination', options['build_destination'], '-derivedDataPath', 'build', 'build'], stdout=open('/dev/null', 'w'))
     else:
-        subprocess.call(['xcrun', 'xcodebuild', '-target', options['target_name'], '-configuration', options['build_config'], '-destination', 'name=iPhone 4s', 'clean', 'build', 'SYMROOT=build'], stdout=open('/dev/null', 'w'))
+        subprocess.call(['xcrun', 'xcodebuild', '-target', options['target_name'], '-configuration', options['build_config'], '-destination', options['build_destination'], 'clean', 'build', 'SYMROOT=build'], stdout=open('/dev/null', 'w'))
 
     os.chdir(previous_dir)
 
@@ -83,6 +83,10 @@ if __name__ == '__main__':
         app_path = os.path.join(project_path, 'build', 'Build', 'Products', options['build_config'] + '-iphonesimulator', options['app_name'])
     else:
         app_path = os.path.join(project_path, 'build', options['build_config'] + '-iphonesimulator', options['app_name'])
+
+    if 'build_destination' not in options:
+        # no destination was specified, assume we're building for an iPhone 4s so that we end up with a 32-bit binary that will run everywhere
+        options['build_destination'] = 'name=iPhone 4s'
     
     print 'Building with ' + options['build_config'] + ' configuration...'
     compile_app()
