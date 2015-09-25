@@ -24,9 +24,15 @@ def compile_app():
     # By default this script uses an iPhone 4s as the destination so that the 32-bit version gets built (which will run on all devices)
     # The destination can be configured in the options json
     if 'scheme_name' in options:
-        subprocess.call(['xcrun', 'xcodebuild', '-scheme', options['scheme_name'], '-configuration', options['build_config'], '-destination', options['build_destination'], '-derivedDataPath', 'build', 'build'], stdout=open('/dev/null', 'w'))
+        arguments = ['xcrun', 'xcodebuild', '-scheme', options['scheme_name'], '-configuration', options['build_config'], '-destination', options['build_destination'], '-derivedDataPath', 'build', 'clean', 'build']
     else:
-        subprocess.call(['xcrun', 'xcodebuild', '-target', options['target_name'], '-configuration', options['build_config'], '-destination', options['build_destination'], 'clean', 'build', 'SYMROOT=build'], stdout=open('/dev/null', 'w'))
+        arguments = ['xcrun', 'xcodebuild', '-target', options['target_name'], '-configuration', options['build_config'], '-destination', options['build_destination'], 'clean', 'build', 'SYMROOT=build']
+
+    if options['skip_clean']:
+        # Don't clean the build before building and running
+        arguments.remove('clean')
+
+    subprocess.call(arguments, stdout=open('/dev/null', 'w'))
 
     os.chdir(previous_dir)
 
@@ -49,6 +55,7 @@ def iossim(app_path, args, device):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Build iOS screenshots.')
+    parser.add_argument('--skip-clean', '-s', action='store_true', help='skip clean when calling xcodebuild')
     parser.add_argument('--path', '-p', dest='destination', help='destination path for screenshots (overrides config)')
     parser.add_argument('config', help='path to JSON config file')
 
@@ -70,6 +77,9 @@ if __name__ == '__main__':
 
     if args.destination:
         options['destination_path'] = args.destination
+
+    if args.skip_clean:
+        options['skip_clean'] = True
 
     ###
     
