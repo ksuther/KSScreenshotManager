@@ -28,7 +28,7 @@ def compile_app():
     else:
         arguments = ['xcrun', 'xcodebuild', '-target', options['target_name'], '-configuration', options['build_config'], '-destination', options['build_destination'], 'clean', 'build', 'SYMROOT=build']
 
-    if options['skip_clean']:
+    if 'skip_clean' in options and options['skip_clean']:
         # Don't clean the build before building and running
         arguments.remove('clean')
 
