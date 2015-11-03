@@ -156,20 +156,19 @@
     UIImage *image = [UIImage imageWithCGImage:CGImage];
     NSString *devicePrefix;
     NSString *screenDensity = isRetina ? [NSString stringWithFormat:@"@%.0fx", [[UIScreen mainScreen] scale]] : @"";
-    
+    CGFloat screenHeight;
+
+    if ([[UIScreen mainScreen] respondsToSelector:@selector(coordinateSpace)]) {
+        // Always refer to screens by the vertical height, even if the screenshot is landscape
+        screenHeight = CGRectGetHeight([[[UIScreen mainScreen] coordinateSpace] convertRect:[[UIScreen mainScreen] bounds] toCoordinateSpace:[[UIScreen mainScreen] fixedCoordinateSpace]]);
+    } else {
+        screenHeight = CGRectGetHeight([[UIScreen mainScreen] bounds]);
+    }
+
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        CGFloat screenHeight;
-        
-        if ([[UIScreen mainScreen] respondsToSelector:@selector(coordinateSpace)]) {
-            // Always refer to screens by the vertical height, even if the screenshot is landscape
-            screenHeight = CGRectGetHeight([[[UIScreen mainScreen] coordinateSpace] convertRect:[[UIScreen mainScreen] bounds] toCoordinateSpace:[[UIScreen mainScreen] fixedCoordinateSpace]]);
-        } else {
-            screenHeight = CGRectGetHeight([[UIScreen mainScreen] bounds]);
-        }
-        
         devicePrefix = [NSString stringWithFormat:@"iphone%.0f%@", screenHeight, screenDensity];
     } else {
-        devicePrefix = [NSString stringWithFormat:@"ipad%@",screenDensity];
+        devicePrefix = [NSString stringWithFormat:@"ipad%.0f%@", screenHeight, screenDensity];
     }
     
     NSData *data = UIImagePNGRepresentation(image);
