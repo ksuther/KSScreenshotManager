@@ -32,22 +32,31 @@
 
 @implementation KSScreenshotManager
 
-- (id)init
+- (instancetype)init
 {
     if ( (self = [super init]) ) {
         NSArray *arguments = [[NSProcessInfo processInfo] arguments];
+        NSDictionary *env = [[NSProcessInfo processInfo] environment];
         
-        //Prefer taking the last launch argument. This allows us to specify an output path when running with WaxSim.
-        if ([arguments count] > 1) {
+        // Prefer taking the last launch argument. This allows us to specify an output path when running with WaxSim.
+        if (env[@"SCREENSHOTS_PATH"]) {
+            NSString *savePath = [env[@"SCREENSHOTS_PATH"] stringByExpandingTildeInPath];
+            [self setScreenshotsURL:[NSURL fileURLWithPath:savePath]];
+        } else if ([arguments count] > 1) {
             NSString *savePath = [[arguments lastObject] stringByExpandingTildeInPath];
-            
             [self setScreenshotsURL:[NSURL fileURLWithPath:savePath]];
         } else {
             NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-            
             [self setScreenshotsURL:[NSURL fileURLWithPath:documentsPath]];
         }
-
+        
+        // Create status file in the path
+        NSURL *fileURL = [[self screenshotsURL] URLByAppendingPathComponent:@".screenshots.tmp"];
+        NSError *error;
+        if ([arguments.description writeToURL:fileURL atomically:YES encoding:NSUTF8StringEncoding error:&error] == NO) {
+            NSLog(@"Failed to create %@ status file.", fileURL);
+        }
+        
         _exitOnComplete = YES;
         _loggingEnabled = YES;
     }
@@ -80,6 +89,12 @@
             [self actionIsReady];
         }
     } else if ([self doesExitOnComplete]) {
+        NSURL *fileURL = [[self screenshotsURL] URLByAppendingPathComponent:@".screenshots.tmp"];
+        NSError *error;
+        if ([[NSFileManager defaultManager] removeItemAtURL:fileURL error:&error] == NO) {
+            NSLog(@"Failed to remove status file at %@", fileURL);
+        }
+
         exit(0);
     }
 }
