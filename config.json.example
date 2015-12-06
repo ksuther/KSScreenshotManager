@@ -1,12 +1,14 @@
 {
     "app_name": "KSScreenshotManagerExample.app",
+    "app_id": "com.ksuther.KSScreenshotManagerExample",
     "build_config": "Screenshots",
     "destination_path": "/tmp/screenshots",
-    "devices": [
-        "com.apple.CoreSimulator.SimDeviceType.iPhone-4s",
-        "com.apple.CoreSimulator.SimDeviceType.iPhone-5",
-        "com.apple.CoreSimulator.SimDeviceType.iPhone-6",
-        "com.apple.CoreSimulator.SimDeviceType.iPhone-6-Plus"
+    "ios_version": "9.1",
+    "device_names": [
+        "iPhone 4s",
+        "iPhone 5",
+        "iPhone 6",
+        "iPhone 6 Plus"
     ],
     "languages": [
         "en",

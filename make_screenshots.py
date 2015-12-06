@@ -4,17 +4,12 @@
 
 import os
 import sys
+import time
 import subprocess
 import glob
 import argparse
 import json
 import shutil
-
-def compile_iossim():
-    previous_dir = os.getcwd()
-    os.chdir(os.path.join(os.path.realpath(os.path.split(__file__)[0]), 'Contributed', 'ios-sim'))
-    subprocess.call(['xcrun', 'xcodebuild', '-scheme', 'ios-sim', '-configuration', 'Release', '-derivedDataPath', 'build', 'clean', 'build', 'SYMROOT=build'], stdout=open('/dev/null', 'w'))
-    os.chdir(previous_dir)
 
 def compile_app():
     previous_dir = os.getcwd()
@@ -37,21 +32,35 @@ def compile_app():
     os.chdir(previous_dir)
 
 def quit_simulator():
-    subprocess.call(['killall', 'iOS Simulator'])
+    subprocess.call(['killall', 'Simulator'])
     
 def reset_simulator():
     shutil.rmtree(os.path.expanduser('~/Library/Application Support/iPhone Simulator'), ignore_errors=True)
 
-def iossim(app_path, args, device):
-    iossim_path = os.path.join(os.path.split(os.path.realpath(__file__))[0], 'Contributed', 'ios-sim', 'build', 'Release', 'ios-sim')
-    subprocess_args = [iossim_path]
+def start_simulator(device, app_path):
+    subprocess.call(['xcrun', 'instruments', '-w', "%s (%s)" % (device, options['ios_version'])])
+    subprocess.call(['xcrun', 'simctl', 'install', device, app_path])
+    print "Installed app %s on device %s" % (app_path, device)
 
-    subprocess_args += ['launch', app_path, '--devicetypeid', device]
-
-    subprocess_args += ['--args']
+def simctl(device, app, args, output_path):
+    subprocess_args = ['xcrun', 'simctl', 'launch', device, app]
     subprocess_args += args
+    subprocess_args += [output_path]
     
+    status = output_path + "/.screenshots.tmp"
+    if os.path.isfile(status):
+        os.remove(status) # Start from clean slate
+    
+    print "Launching app in simulator: %s" % subprocess_args
     subprocess.call(subprocess_args)
+    print "Simulator launched, waiting for app to start..."
+    # Wait for .screenshots.tmp file to appear
+    while not os.path.isfile(status):
+        time.sleep(1)
+    print "Got it, now waiting for app to complete."
+    while os.path.isfile(status):
+        time.sleep(1)
+    print "Complete!"
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Build iOS screenshots.')
@@ -101,15 +110,12 @@ if __name__ == '__main__':
     print 'Building with ' + options['build_config'] + ' configuration...'
     compile_app()
     
-    print 'Building ios-sim...'
-    compile_iossim()
-    
     # create destination directory
     if not os.path.exists(options['destination_path']):
         os.makedirs(options['destination_path'])
         
-    for device in options['devices']:
-        quit_simulator()
+    for device in options['device_names']:
+        start_simulator(device, app_path)
         
         for language in options['languages']:
             language_path = os.path.join(options['destination_path'], language)
@@ -122,6 +128,6 @@ if __name__ == '__main__':
                 quit_simulator()
                 reset_simulator()
             
-            iossim(app_path, ['-AppleLanguages', '({})'.format(language), '-AppleLocale', language, language_path], device)
+            simctl(device, options['app_id'], ['-AppleLanguages', '({})'.format(language), '-AppleLocale', language], language_path)
 
     quit_simulator()

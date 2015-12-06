@@ -26,9 +26,9 @@ An example project is located in Example (surprise!). It has a very simple KSScr
 
 `python make_screenshots.py config.json.example`
 
-This will compile the sample project, ios-sim, then use ios-sim to run the simulator build and dump the screenshots to /tmp/screenshots.
+This will compile the sample project then run the simulator build and dump the screenshots to /tmp/screenshots.
 
-Make sure that you've checked out ios-sim as a submodule by running `git submodule update --init` after cloning this repository, otherwise `make_screenshots.py` won't work.
+This version does not rely on the `ios-sim` command anymore, instead relying solely on the `simctl` command bundled with Xcode 6 and later. 
 
 ## License
 
