@@ -30,6 +30,13 @@ This will compile the sample project then run the simulator build and dump the s
 
 This version does not rely on the `ios-sim` command anymore, instead relying solely on the `simctl` command bundled with Xcode 6 and later. 
 
+## Configuration File
+
+The JSON configuration file now includes references to the simulators enabled on your system. The names in the `device_names` dictionary should match the simulator names as set up in your Xcode devices. The `ios_version` also needs to be set so that simulators can be switched appropriately.
+
+You can get a list of the enabled simulators on the command line by running `xcrun instruments -w help` and using its output to help your populate these configuration values. Note that connected hardware devices will also show up in this list. Run `xcrun simctl list` for a list narrowed down to your simulators.
+
+
 ## License
 
 MIT License
