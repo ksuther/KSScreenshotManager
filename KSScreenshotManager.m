@@ -88,14 +88,15 @@
             //asynchronous actions need to call actionIsReady manually
             [self actionIsReady];
         }
-    } else if ([self doesExitOnComplete]) {
+    } else {
         NSURL *fileURL = [[self screenshotsURL] URLByAppendingPathComponent:@".screenshots.tmp"];
         NSError *error;
         if ([[NSFileManager defaultManager] removeItemAtURL:fileURL error:&error] == NO) {
             NSLog(@"Failed to remove status file at %@", fileURL);
         }
-
-        exit(0);
+        
+        if ([self doesExitOnComplete])
+            exit(0);
     }
 }
 
