@@ -41,6 +41,7 @@
 		3749A65F16C8A65F007C1216 /* MyTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTableViewController.m; sourceTree = SOURCE_ROOT; };
 		3749A68916C8B063007C1216 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
 		3749A68B16C8B06B007C1216 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
+		EA1A453D1C1469CE00C18134 /* config.json.example */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = config.json.example; path = ../config.json.example; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +103,7 @@
 		3749A63E16C8A493007C1216 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EA1A453D1C1469CE00C18134 /* config.json.example */,
 				370A485719CB3C09004AE4F3 /* Images.xcassets */,
 				3749A68816C8B063007C1216 /* Localizable.strings */,
 				3749A63F16C8A493007C1216 /* KSScreenshotManagerExample-Info.plist */,
@@ -149,7 +151,7 @@
 		3749A62C16C8A493007C1216 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "Kent Sutherland";
 			};
 			buildConfigurationList = 3749A62F16C8A493007C1216 /* Build configuration list for PBXProject "KSScreenshotManagerExample" */;
@@ -225,6 +227,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -278,6 +281,7 @@
 					CREATING_SCREENSHOTS,
 				);
 				INFOPLIST_FILE = "KSScreenshotManagerExample-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ksuther.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -294,6 +298,7 @@
 					CREATING_SCREENSHOTS,
 				);
 				INFOPLIST_FILE = "KSScreenshotManagerExample-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ksuther.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -341,6 +346,7 @@
 					CREATING_SCREENSHOTS,
 				);
 				INFOPLIST_FILE = "KSScreenshotManagerExample-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ksuther.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
