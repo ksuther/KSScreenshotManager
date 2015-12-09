@@ -27,6 +27,7 @@ def compile_app():
         # Don't clean the build before building and running
         arguments.remove('clean')
 
+    print "Build command: %s" % arguments
     subprocess.call(arguments, stdout=open('/dev/null', 'w'))
 
     os.chdir(previous_dir)

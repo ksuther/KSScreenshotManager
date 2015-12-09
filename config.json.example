@@ -3,7 +3,7 @@
     "app_id": "com.ksuther.KSScreenshotManagerExample",
     "build_config": "Screenshots",
     "destination_path": "/tmp/screenshots",
-    "ios_version": "9.1",
+    "ios_version": "9.2",
     "device_names": [
         "iPhone 4s",
         "iPhone 5",
