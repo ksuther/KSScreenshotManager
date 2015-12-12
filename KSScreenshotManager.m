@@ -67,7 +67,7 @@
 {
     [self setupScreenshotActions];
     
-    if ([[self screenshotActions] count] == 0) {
+    if ([self.screenshotActions count] == 0) {
         [NSException raise:NSInternalInconsistencyException format:@"No screenshot actions have been defined. Unable to take screenshots."];
     }
     
@@ -77,13 +77,17 @@
 - (void)takeNextScreenshot
 {
     if ([[self screenshotActions] count] > 0) {
-        KSScreenshotAction *nextAction = [[self screenshotActions] objectAtIndex:0];
+        KSScreenshotAction *nextAction = self.screenshotActions[0];
         
-        if ([nextAction actionBlock]) {
-            [nextAction actionBlock]();
+        if (_loggingEnabled) {
+            NSLog(@"Taking screenshot: %@", nextAction.name);
         }
         
-        if (![nextAction asynchronous]) {
+        if (nextAction.actionBlock) {
+            nextAction.actionBlock();
+        }
+        
+        if (!nextAction.asynchronous) {
             //synchronous actions can run immediately
             //asynchronous actions need to call actionIsReady manually
             [self actionIsReady];
@@ -104,15 +108,15 @@
 {
     CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.1, false); //spin the run loop to give the UI a chance to catch up
     
-    KSScreenshotAction *nextAction = [[self screenshotActions] objectAtIndex:0];
+    KSScreenshotAction *nextAction = self.screenshotActions[0];
     
-    [self saveScreenshot:[nextAction name] includeStatusBar:[nextAction includeStatusBar]];
+    [self saveScreenshot:nextAction.name includeStatusBar:nextAction.includeStatusBar];
     
-    if ([nextAction cleanupBlock]) {
-        [nextAction cleanupBlock]();
+    if (nextAction.cleanupBlock) {
+        nextAction.cleanupBlock();
     }
     
-    [[self screenshotActions] removeObjectAtIndex:0];
+    [self.screenshotActions removeObjectAtIndex:0];
     
     [self takeNextScreenshot];
 }
