@@ -40,7 +40,7 @@ def reset_simulator():
     shutil.rmtree(os.path.expanduser('~/Library/Application Support/iPhone Simulator'), ignore_errors=True)
 
 def start_simulator(device, app_path):
-    subprocess.call(['xcrun', 'instruments', '-w', "%s (%s)" % (device, options['ios_version'])])
+    subprocess.call(['xcrun', 'instruments', '-w', "%s" % (device)])
     subprocess.call(['xcrun', 'simctl', 'install', device, app_path])
     print "Installed app %s on device %s" % (app_path, device)
 
@@ -51,6 +51,19 @@ def is_running(pid):
         if err.errno == errno.ESRCH:
             return False
     return True
+
+def get_simulators():
+    output = subprocess.check_output(['xcrun', 'instruments', '-s', 'devices'], close_fds=True)
+    simulators = []
+
+    for line in output.split('\n'):
+        #result = re.match('([\w ]+) \(([\d.]+)\) \[([A-Z0-9-])\]', line)
+        result = re.match('(.+) \(([\d.]+)\) \[([A-Z0-9-]+)\]', line)
+
+        if result:
+            simulators.append((result.group(1), result.group(2), result.group(3)))
+
+    return simulators
 
 def simctl(device, app, args, output_path):
     subprocess_args = ['xcrun', 'simctl', 'launch', device, app]
@@ -129,9 +142,18 @@ if __name__ == '__main__':
     # create destination directory
     if not os.path.exists(options['destination_path']):
         os.makedirs(options['destination_path'])
-        
+
+    # sort simulators by version (this ensures we take the latest iOS version if ios_version isn't specified)
+    simulators = sorted(get_simulators(), key=lambda x: x[1], reverse=True)
+
     for device in options['device_names']:
-        start_simulator(device, app_path)
+        # find the simulator UUID for the specified device
+        for next_simulator in simulators:
+            if next_simulator[0] == device and ('ios_version' not in options or ('ios_version' in options and next_simulator[1] == options['ios_version'])):
+                device_uuid = next_simulator[2]
+                break
+
+        start_simulator(device_uuid, app_path)
         
         for language in options['languages']:
             language_path = os.path.join(options['destination_path'], language)
