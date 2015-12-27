@@ -32,10 +32,11 @@ This version does not rely on the `ios-sim` command anymore, instead relying sol
 
 ## Configuration File
 
-The JSON configuration file now includes references to the simulators enabled on your system. The names in the `device_names` dictionary should match the simulator names as set up in your Xcode devices. The `ios_version` also needs to be set so that simulators can be switched appropriately.
+The JSON configuration file references the simulators on your system. The names in `device_names` should match the simulator names as set up in your Xcode devices. Xcode creates default simulators named iPhone 6, iPhone 6s, iPad Air, iPad Air 2, etc.
 
-You can get a list of the enabled simulators on the command line by running `xcrun instruments -w help` and using its output to help your populate these configuration values. Note that connected hardware devices will also show up in this list. Run `xcrun simctl list` for a list narrowed down to your simulators.
+`ios_version` is optional if you want screenshots to be created with a particular iOS version. If `ios_version` is not specified then the latest iOS version found will be used.
 
+You can get a list of the enabled simulators on the command line by running `xcrun instruments -s devices` and using its output to help your populate these configuration values. Note that connected hardware devices will also show up in this list. Run `xcrun simctl list` for a list narrowed down to your simulators.
 
 ## License
 
