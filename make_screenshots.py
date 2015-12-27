@@ -10,6 +10,8 @@ import glob
 import argparse
 import json
 import shutil
+import re
+import errno
 
 def compile_app():
     previous_dir = os.getcwd()
@@ -42,23 +44,27 @@ def start_simulator(device, app_path):
     subprocess.call(['xcrun', 'simctl', 'install', device, app_path])
     print "Installed app %s on device %s" % (app_path, device)
 
+def is_running(pid):
+    try:
+        os.kill(pid, 0)
+    except OSError as err:
+        if err.errno == errno.ESRCH:
+            return False
+    return True
+
 def simctl(device, app, args, output_path):
     subprocess_args = ['xcrun', 'simctl', 'launch', device, app]
     subprocess_args += args
     subprocess_args += [output_path]
 
-    status = output_path + "/.screenshots.tmp"
-    if os.path.isfile(status):
-        os.remove(status) # Start from clean slate
-    
     print "Launching app in simulator: %s" % subprocess_args
-    subprocess.call(subprocess_args)
-    print "Simulator launched, waiting for app to start..."
-    # Wait for .screenshots.tmp file to appear
-    while not os.path.isfile(status):
-        time.sleep(1)
-    print "Got it, now waiting for app to complete."
-    while os.path.isfile(status):
+
+    launch_output = subprocess.check_output(subprocess_args)
+    launch_pid = int(re.search(': (\d+)$', launch_output).group(1))
+
+    print "Simulator launched, waiting for app to run..."
+
+    while is_running(launch_pid):
         time.sleep(1)
     print "Complete!"
 

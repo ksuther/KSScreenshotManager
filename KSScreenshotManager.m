@@ -49,14 +49,7 @@
             NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
             [self setScreenshotsURL:[NSURL fileURLWithPath:documentsPath]];
         }
-        
-        // Create status file in the path
-        NSURL *fileURL = [[self screenshotsURL] URLByAppendingPathComponent:@".screenshots.tmp"];
-        NSError *error;
-        if ([arguments.description writeToURL:fileURL atomically:YES encoding:NSUTF8StringEncoding error:&error] == NO) {
-            NSLog(@"Failed to create %@ status file.", fileURL);
-        }
-        
+
         _exitOnComplete = YES;
         _loggingEnabled = YES;
     }
@@ -92,15 +85,8 @@
             //asynchronous actions need to call actionIsReady manually
             [self actionIsReady];
         }
-    } else {
-        NSURL *fileURL = [[self screenshotsURL] URLByAppendingPathComponent:@".screenshots.tmp"];
-        NSError *error;
-        if ([[NSFileManager defaultManager] removeItemAtURL:fileURL error:&error] == NO) {
-            NSLog(@"Failed to remove status file at %@", fileURL);
-        }
-        
-        if ([self doesExitOnComplete])
-            exit(0);
+    } else if ([self doesExitOnComplete]) {
+        exit(0);
     }
 }
 
