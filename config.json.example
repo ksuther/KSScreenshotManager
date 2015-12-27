@@ -1,6 +1,6 @@
 {
     "app_name": "KSScreenshotManagerExample.app",
-    "app_id": "com.ksuther.KSScreenshotManagerExample",
+    "bundle_id": "com.ksuther.KSScreenshotManagerExample",
     "build_config": "Screenshots",
     "destination_path": "/tmp/screenshots",
     "ios_version": "9.2",

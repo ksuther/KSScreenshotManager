@@ -144,6 +144,6 @@ if __name__ == '__main__':
                 quit_simulator()
                 reset_simulator()
 
-            simctl(device, options['app_id'], ['-AppleLanguages', '({})'.format(language), '-AppleLocale', language], language_path)
+            simctl(device, options['bundle_id'], ['-AppleLanguages', '({})'.format(language), '-AppleLocale', language], language_path)
 
     quit_simulator()
