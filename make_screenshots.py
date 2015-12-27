@@ -29,7 +29,7 @@ def compile_app():
         # Don't clean the build before building and running
         arguments.remove('clean')
     
-    print "Recompiling app: %s" % arguments
+    print "Building app: %s" % ' '.join(arguments)
     subprocess.call(arguments, stdout=open('/dev/null', 'w'))
     os.chdir(previous_dir)
 
@@ -70,15 +70,14 @@ def simctl(device, app, args, output_path):
     subprocess_args += args
     subprocess_args += [output_path]
 
-    print "Launching app in simulator: %s" % subprocess_args
+    print "Launching app in simulator: %s" % ' '.join(subprocess_args)
 
     launch_output = subprocess.check_output(subprocess_args)
     launch_pid = int(re.search(': (\d+)$', launch_output).group(1))
 
-    print "Simulator launched, waiting for app to run..."
-
     while is_running(launch_pid):
         time.sleep(1)
+
     print "Complete!"
 
 if __name__ == '__main__':
@@ -136,7 +135,6 @@ if __name__ == '__main__':
         # no destination was specified, assume we're building for an iPhone 4s so that we end up with a 32-bit binary that will run everywhere
         options['build_destination'] = 'name=iPhone 4s'
 
-    print 'Building with ' + options['build_config'] + ' configuration...'
     compile_app()
     
     # create destination directory
