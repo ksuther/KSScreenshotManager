@@ -3,7 +3,7 @@
     "bundle_id": "com.ksuther.KSScreenshotManagerExample",
     "build_config": "Screenshots",
     "destination_path": "/tmp/screenshots",
-    "device_names": [
+    "devices": [
         "iPhone 4s",
         "iPhone 5",
         "iPhone 6",

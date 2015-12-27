@@ -111,7 +111,7 @@ if __name__ == '__main__':
         options['skip_clean'] = True
 
     if args.device_name:
-        options['device_names'] = [args.device_name]
+        options['devices'] = [args.device_name]
 
     if args.language:
         options['languages'] = [args.language]
@@ -144,7 +144,7 @@ if __name__ == '__main__':
     # sort simulators by version (this ensures we take the latest iOS version if ios_version isn't specified)
     simulators = sorted(get_simulators(), key=lambda x: x[1], reverse=True)
 
-    for device in options['device_names']:
+    for device in options['devices']:
         # find the simulator UUID for the specified device
         for next_simulator in simulators:
             if next_simulator[0] == device and ('ios_version' not in options or ('ios_version' in options and next_simulator[1] == options['ios_version'])):
