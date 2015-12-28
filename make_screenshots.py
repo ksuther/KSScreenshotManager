@@ -53,7 +53,10 @@ def is_running(pid):
     return True
 
 def get_simulators():
-    output = subprocess.check_output(['xcrun', 'instruments', '-s', 'devices'], close_fds=True)
+    process = subprocess.Popen(['xcrun', 'instruments', '-s', 'devices'], stdout=subprocess.PIPE)
+    process.wait()
+
+    output = process.communicate()[0]
     simulators = []
 
     for line in output.split('\n'):
