@@ -36,7 +36,7 @@
 @property(nonatomic, assign) BOOL includeStatusBar; //defaults to NO, which means the status bar will be cropped out
 @property(nonatomic, weak) KSScreenshotManager *manager; //set by addScreenshotAction:, you don't have to set this yourself
 
-+ (instancetype)actionWithName:(NSString *)name asynchronous:(BOOL)asynchronous actionBlock:(void(^)())actionBlock cleanupBlock:(void(^)())cleanupBlock;
++ (instancetype)actionWithName:(NSString *)name asynchronous:(BOOL)asynchronous actionBlock:(void(^)(void))actionBlock cleanupBlock:(void(^)(void))cleanupBlock;
 
 /**
  * Encapsulates a screenshot action. The real portion of interest is the asynchronous flag. If set to NO, the screenshot will be taken immediately after
@@ -49,7 +49,7 @@
  * @param actionBlock Block to set up the screenshot.
  * @param cleanupBlock Block called after the screenshot is taken. Can be nil.
  */
-- (id)initWithName:(NSString *)name asynchronous:(BOOL)asynchronous actionBlock:(void(^)())actionBlock cleanupBlock:(void(^)())cleanupBlock;
+- (id)initWithName:(NSString *)name asynchronous:(BOOL)asynchronous actionBlock:(void(^)(void))actionBlock cleanupBlock:(void(^)(void))cleanupBlock;
 
 @end
 
