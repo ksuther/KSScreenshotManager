@@ -28,12 +28,12 @@
 
 @implementation KSScreenshotAction
 
-+ (instancetype)actionWithName:(NSString *)name asynchronous:(BOOL)asynchronous actionBlock:(void(^)())actionBlock cleanupBlock:(void(^)())cleanupBlock
++ (instancetype)actionWithName:(NSString *)name asynchronous:(BOOL)asynchronous actionBlock:(void(^)(void))actionBlock cleanupBlock:(void(^)(void))cleanupBlock
 {
     return [[self alloc] initWithName:name asynchronous:asynchronous actionBlock:actionBlock cleanupBlock:cleanupBlock];
 }
 
-- (id)initWithName:(NSString *)name asynchronous:(BOOL)asynchronous actionBlock:(void(^)())actionBlock cleanupBlock:(void(^)())cleanupBlock
+- (id)initWithName:(NSString *)name asynchronous:(BOOL)asynchronous actionBlock:(void(^)(void))actionBlock cleanupBlock:(void(^)(void))cleanupBlock
 {
     if ( (self = [super init]) ) {
         [self setName:name];
